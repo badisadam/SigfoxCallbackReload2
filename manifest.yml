@@ -1,0 +1,9 @@
+applications:
+- path: .
+  memory: 256M
+  instances: 1
+  timeout: 80
+  domain: eu-gb.mybluemix.net
+  name: performance-testing-gcz
+  host: performance-testing-gcz
+  disk_quota: 1024M
