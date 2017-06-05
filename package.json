@@ -6,9 +6,10 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "axios": "^0.16.2",
     "cfenv": "1.0.x",
-    "request": "*",
-    "express": "*"
+    "express": "*",
+    "request": "*"
   },
   "repository": {},
   "engines": {
