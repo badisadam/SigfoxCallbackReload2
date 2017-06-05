@@ -21,23 +21,20 @@ var appEnv = cfenv.getAppEnv();
 
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
-  // print a message when the server starts listening
+        var dataresp1;  axios.get('https://backend.sigfox.com/api/groups', {
+            auth: {
+                username: '58ef64549e93a17a4a7e01b2',
+                password: '4837428854ea5bdb0ff08e0cd7716906'
+            },
+            responseType: 'json'
+        }).then(function (response) {
+            var dataresp = response.data;
+            console.log(dataresp);
 
 
 
-      axios.get('https://backend.sigfox.com/api/groups', {
-        auth: {
-            username: '58ef64549e93a17a4a7e01b2',
-            password: '4837428854ea5bdb0ff08e0cd7716906'
-        },
-        responseType: 'json'
-    }).then(function (response) {
-        var dataresp = response.data;
-        console.log(dataresp);
-
-
-
+        });
     });
-
+  // print a message when the server starts listening
   console.log("server starting on " + appEnv.url);
-});
+
