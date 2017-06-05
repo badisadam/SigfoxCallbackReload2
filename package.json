@@ -9,6 +9,7 @@
     "axios": "^0.16.2",
     "cfenv": "1.0.x",
     "express": "*",
+    "path": "^0.12.7",
     "request": "*"
   },
   "repository": {},
