@@ -1,6 +1,10 @@
 var request = require('request');
-
 var express = require('express');
+var axios = require('axios');
+var http = require('http');
+
+
+
 
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
@@ -18,5 +22,22 @@ var appEnv = cfenv.getAppEnv();
 // start server on the specified port and binding host
 app.listen(appEnv.port, '0.0.0.0', function() {
   // print a message when the server starts listening
+
+
+
+      axios.get('https://backend.sigfox.com/api/groups', {
+        auth: {
+            username: '58ef64549e93a17a4a7e01b2',
+            password: '4837428854ea5bdb0ff08e0cd7716906'
+        },
+        responseType: 'json'
+    }).then(function (response) {
+        var dataresp = response.data;
+        console.log(dataresp);
+
+
+
+    });
+
   console.log("server starting on " + appEnv.url);
 });
