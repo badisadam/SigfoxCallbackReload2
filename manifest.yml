@@ -4,6 +4,6 @@ applications:
   instances: 1
   timeout: 80
   domain: eu-gb.mybluemix.net
-  name: SigfoxCallbackReload
-  host: SigfoxCallbackReload
+  name: SigfoxCallbackReload2
+  host: SigfoxCallbackReload2
   disk_quota: 1024M
