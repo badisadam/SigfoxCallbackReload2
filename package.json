@@ -1,17 +1,22 @@
 {
-	"name": "NodejsStarterApp",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"start": "node app.js"
-	},
-	"dependencies": {
-		"cfenv": "1.0.x",
-		"request":"*",
-		"express": "*"
-	},
-	"repository": {},
-	"engines": {
-		"node": "6.x"
-	} 
+  "name": "sigfoxcallbackrelaod2",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cfenv": "1.0.x",
+    "request": "*",
+    "express": "*"
+  },
+  "repository": {},
+  "engines": {
+    "node": "6.x"
+  },
+  "description": "This README.md file is displayed on your project page. You should edit this \r file to describe your project, including instructions for building and \r running the project, pointers to the license under which you are making the \r project available, and anything else you think would be useful for others to\r know.",
+  "main": "app.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }
