@@ -2,8 +2,8 @@ var request = require('request');
 var express = require('express');
 var axios = require('axios');
 var http = require('http');
-var path = require('path');
 
+var fs = require('fs');
 
 var dataresp1;
 // cfenv provides access to your Cloud Foundry environment
@@ -14,7 +14,7 @@ var cfenv = require('cfenv');
 var app = express();
 
 // serve the files out of ./public as our main files
-//app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public'));
 
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
@@ -31,18 +31,25 @@ var appEnv = cfenv.getAppEnv();
 }).then(function (res) {
 
     dataresp2 = res.data;
-dataresp1 = JSON.stringify(dataresp2);
+     dataresp1 = JSON.stringify(dataresp2);
     console.log(res.data);
 
 
 
 });
+app.get('/asking', function(res) {
+    fs.readFile('form.html', function (err, data) {
+        res.writeHead(200, {
+            'Content-Type': 'text/html',
+            'Content-Length': data.length
+        });
+        res.write(data);
+        res.end();
+    });
+});
 
-app.get('/', function(req, res) {
 
-    //res.sendFile(path.join('/index.html'));
-
-
+app.get('/reponse', function(req, res) {
     res.writeHead(200, { 'Content-Type': 'text/html' });
     res.write('test1' + dataresp1);
 });
