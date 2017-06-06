@@ -67,6 +67,23 @@ app.use(session({secret: 'todotopsecret'}))
     .post('/asking/ajouter/', urlencodedParser, function(req, res) {
         if (req.body.deviceid != '') {
             req.session.tableaucallback.push(req.body.deviceid);
+           //test implementation de requete get
+            req.session.tableaucallback.push(axios.get('https://backend.sigfox.com/api/groups', {
+                auth: {
+                    username: '58ef64549e93a17a4a7e01b2',
+                    password: '4837428854ea5bdb0ff08e0cd7716906'
+                },
+                responseType: 'json'
+            }).then(function (res) {
+
+                dataresp2 = res.data;
+                dataresp1 = JSON.stringify(dataresp2);
+                console.log(res.data);
+
+
+
+            }));
+
         }
         res.redirect('/asking');
     })
