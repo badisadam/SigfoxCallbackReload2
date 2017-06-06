@@ -9,6 +9,7 @@
     "axios": "^0.16.2",
     "cfenv": "1.0.x",
     "express": "*",
+    "formidable": "^1.1.1",
     "path": "^0.12.7",
     "request": "*"
   },
