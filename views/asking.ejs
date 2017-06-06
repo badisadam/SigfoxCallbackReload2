@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>app</title>
+    <style>
+        a {text-decoration: none; color: black;}
+    </style>
+</head>
+
+<body>
+<h1>Ma todolist</h1>
+
+<ul>
+    <% tableaucallback.forEach(function(callbackdevice, index) { %>
+    <li><a href="/asking/supprimer/<%= index %>">✘</a> <%= callbackdevice %></li>
+    <% }); %>
+</ul>
+
+<form action="/asking/ajouter/" method="post">
+    <p>
+        <label for="newtodo">numero du device</label>
+        <input type="text" name="deviceid" id="deviceid" autofocus />
+        <input type="submit" />
+    </p>
+</form>
+</body>
+</html>
