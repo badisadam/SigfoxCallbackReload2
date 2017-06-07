@@ -6,6 +6,7 @@ var session = require('cookie-session'); // Charge le middleware de sessions
 var bodyParser = require('body-parser'); // Charge le middleware de gestion des paramètres
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var dataresp1;
+
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
@@ -16,12 +17,12 @@ var app = express();
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
 
-
-
- axios.get('https://backend.sigfox.com/api/groups', {
+/*var numdevicetest = '7A501';
+var phrase = 'https://backend.sigfox.com/api/devices/'+numdevicetest+'/messages'
+ axios.get('https://backend.sigfox.com/api/devices/'+numdevicetest+'/messages', {
     auth: {
-        username: '58ef64549e93a17a4a7e01b2',
-        password: '4837428854ea5bdb0ff08e0cd7716906'
+        username: '5937bc6f9e93a13f76ef0764',
+        password: '49bd406abd0da432b87cc7a9e9efe4df'
     },
     responseType: 'json'
 }).then(function (res) {
@@ -33,8 +34,8 @@ var appEnv = cfenv.getAppEnv();
 
 
 });
-
-
+*/
+//JSON.stringify(
 
 
 
@@ -65,26 +66,23 @@ app.use(session({secret: 'todotopsecret'}))
     })
     /* On ajoute un élément à la todolist */
     .post('/asking/ajouter/', urlencodedParser, function(req, res) {
+
         if (req.body.deviceid != '') {
-            req.session.tableaucallback.push(req.body.deviceid);
+            var numdevice = req.body.deviceid;
+            var arraydevice = req.session.tableaucallback;
+            arraydevice.push(numdevice);
            //test implementation de requete get
-            req.session.tableaucallback.push(axios.get('https://backend.sigfox.com/api/groups', {
+           axios.get('https://backend.sigfox.com/api/devices/'+numdevice+'/messages', {
                 auth: {
-                    username: '58ef64549e93a17a4a7e01b2',
-                    password: '4837428854ea5bdb0ff08e0cd7716906'
+                    username: '5937bc6f9e93a13f76ef0764',
+                    password: '49bd406abd0da432b87cc7a9e9efe4df'
                 },
                 responseType: 'json'
-            }).then(function (res) {
-
-                dataresp2 = res.data;
-                dataresp1 = JSON.stringify(dataresp2);
-                console.log(res.data);
+            })
+            };
 
 
 
-            }));
-
-        }
         res.redirect('/asking');
     })
     /* Supprime un élément de la todolist */
