@@ -68,17 +68,29 @@ app.use(session({secret: 'todotopsecret'}))
     .post('/asking/ajouter/', urlencodedParser, function(req, res) {
 
         if (req.body.deviceid != '') {
+            var retourget;
             var numdevice = req.body.deviceid;
-            var arraydevice = req.session.tableaucallback;
-            arraydevice.push(numdevice);
+
+            req.session.tableaucallback.push(numdevice);
            //test implementation de requete get
            axios.get('https://backend.sigfox.com/api/devices/'+numdevice+'/messages', {
-                auth: {
-                    username: '5937bc6f9e93a13f76ef0764',
-                    password: '49bd406abd0da432b87cc7a9e9efe4df'
-                },
-                responseType: 'json'
-            })
+               auth: {
+                   username: '5937bc6f9e93a13f76ef0764',
+                   password: '49bd406abd0da432b87cc7a9e9efe4df'
+               },
+               responseType: 'json'
+
+           }
+                .next(function(res) {
+               for (var i=0 ,i_len = res.length ; i< i_len; i++){
+
+                   req.session.tableaucallback.push([i, res.data [i]]);
+               }
+
+            }
+
+        );
+
             };
 
 
