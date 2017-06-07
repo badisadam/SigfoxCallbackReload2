@@ -72,27 +72,27 @@ app.use(session({secret: 'todotopsecret'}))
             var numdevice = req.body.deviceid;
 
             req.session.tableaucallback.push(numdevice);
-           //test implementation de requete get
-           axios.get('https://backend.sigfox.com/api/devices/'+numdevice+'/messages', {
-               auth: {
-                   username: '5937bc6f9e93a13f76ef0764',
-                   password: '49bd406abd0da432b87cc7a9e9efe4df'
-               },
-               responseType: 'json'
+            //test implementation de requete get
+            axios.get('https://backend.sigfox.com/api/devices/' + numdevice + '/messages', {
+                auth: {
+                    username: '5937bc6f9e93a13f76ef0764',
+                    password: '49bd406abd0da432b87cc7a9e9efe4df'
+                },
+                responseType: 'json'
+            })
+        }
 
-           }
-                .next(function(res) {
-               for (var i=0 ,i_len = res.length ; i< i_len; i++){
+        console.log(res.data);
+        var a = res.data;
+        var b = JSON.stringify(a);
+        retourget = b;
+        for (var i = 0; i < b.length; i++) {
 
-                   req.session.tableaucallback.push([i, res.data [i]]);
-               }
+            req.session.tableaucallback.push(b);
 
-            }
 
-        );
-
-            };
-
+        }
+        ;
 
 
         res.redirect('/asking');
