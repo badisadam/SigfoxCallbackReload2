@@ -36,14 +36,6 @@ app.use(session({secret :'badissecret'}))
         next();
     })
 
-
-
-
-
-
-
-
-
     /* On affiche la todolist et le formulaire */
     .get('/asking', function(req, res) {
         res.render('asking.ejs', {tableaucallback: req.session.tableaucallback});
@@ -51,46 +43,36 @@ app.use(session({secret :'badissecret'}))
     /* On ajoute un élément à la todolist */
     .post('/asking/ajouter/', urlencodedParser, function(req, res) {
 
-        if (req.body.deviceid != '') {
+        if (req.body.deviceid !== '') {
 
             numdevice = req.body.deviceid; //recuperation de la valeur du device id
 
             req.session.tableaucallback.push(numdevice); // push du device id dans le array tableaucallback
             //envoi de la requete GET et récupération dans une variable
-           var jsonobj = axios.get('https://backend.sigfox.com/api/devices/' + numdevice + '/messages?limit=1', {
-                    auth: {
-                        username: '5937bc6f9e93a13f76ef0764',
-                        password: '49bd406abd0da432b87cc7a9e9efe4df'
-                    },
-                    responseType: 'json',
+            var jsonobj =
+                axios
+                    .get('https://backend.sigfox.com/api/devices/' + numdevice + '/messages?limit=1', {
+                        auth:{
+                            username: '5937bc6f9e93a13f76ef0764',
+                            password: '49bd406abd0da432b87cc7a9e9efe4df'
+                            },
+                        responseType: 'json'
+                    }
+                        )
+                    .then(function (response) {
+                        console.log(response.data);
 
-                }
-
-            ).then(function(res){
-                console.log(res.data);
-           })
-           var jsonbis = values(function(key){
-                return jsonobj[key];
-            })
-            console.log(jsonbis);
-            req.session.tableaucallback.push(jsonbis);
+            }
+        );
+ req.session.tableaucallback.push(jsonobj['device']);
         }
-
-
             res.redirect('/asking')
         }     )
 
 
-
-
-
-
-
-
-
     /* Supprime un élément de la todolist */
     .get('/asking/supprimer/:id', function(req, res) {
-        if (req.params.id != '') {
+        if (req.params.id !== '') {
             req.session.tableaucallback.splice(req.params.id, 1);
         }
         res.redirect('/asking');
