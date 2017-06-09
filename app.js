@@ -5,7 +5,6 @@ var http = require('http');
 var session = require('cookie-session'); // Charge le middleware de sessions
 var bodyParser = require('body-parser'); // Charge le middleware de gestion des paramètres
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
-
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
@@ -15,7 +14,7 @@ var app = express();
 //app.use(express.static(__dirname + '/public'));
 // get the app environment from Cloud Foundry
 var appEnv = cfenv.getAppEnv();
-
+var values = require('object.values');
 var numdevice;
 var reponse_json ;
 /*writeHead(200, { 'Content-Type': 'text/html' });
@@ -58,7 +57,7 @@ app.use(session({secret :'badissecret'}))
 
             req.session.tableaucallback.push(numdevice); // push du device id dans le array tableaucallback
             //envoi de la requete GET et récupération dans une variable
-           console.log(axios.get('https://backend.sigfox.com/api/devices/' + numdevice + '/messages?limit=1', {
+           var jsonobj = axios.get('https://backend.sigfox.com/api/devices/' + numdevice + '/messages?limit=1', {
                     auth: {
                         username: '5937bc6f9e93a13f76ef0764',
                         password: '49bd406abd0da432b87cc7a9e9efe4df'
@@ -67,17 +66,14 @@ app.use(session({secret :'badissecret'}))
 
                 }
 
-            )).then(function(res){
-
+            ).then(function(res){
+                console.log(res.data);
            })
-           // JSON.stringify(//
-                //.then(function (res){
-
-
-                  // reponse_json = JSON.stringify(console.log(res.data));
-
-                //})
-
+           var jsonbis = values(function(key){
+                return jsonobj[key];
+            })
+            console.log(jsonbis);
+            req.session.tableaucallback.push(jsonbis);
         }
 
 
