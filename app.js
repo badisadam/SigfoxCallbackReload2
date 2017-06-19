@@ -56,7 +56,7 @@ app.use(session({secret :'badissecret'}))
         if(req.body.deviceid !== '') {
 
             numdevice = req.body.deviceid; //recuperation de la valeur du device id
-
+            req.session.tableaucallback.push(numdevice);
              // push du device id dans le array tableaucallback
             //envoi de la requete GET et récupération dans une variable
 
@@ -79,10 +79,13 @@ app.use(session({secret :'badissecret'}))
                     jsontime = response.data['data'][0]['time'];
                     jsondata = response.data['data'][0]['data'];
                     jsondevice = response.data['data'][0]['device'];
+                    req.session.tableaucallback.push(response.data);
 
                     //parse les datas
                     //render les parses dans l'html
                 })
+            req.session.tableaucallback.push(jsondata);
+
         }
             res.redirect('/asking')
 
