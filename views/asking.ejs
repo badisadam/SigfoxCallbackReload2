@@ -1,6 +1,5 @@
 
 <!DOCTYPE html>
-
 <html>
 <head>
     <title>app</title>
@@ -8,15 +7,12 @@
         a {text-decoration: none; color: black;}
     </style>
 </head>
-
 <body>
 <h1>requete http sigfox</h1>
-
 <ul>
     <% tableaucallback.forEach(function(callbackdevice, index) { %>
     <li><a href="/asking/supprimer/<%= index %>">✘</a> <%= callbackdevice %></li>
     <% }); %>
-
 </ul>
 <table>
     <tr>
@@ -24,7 +20,6 @@
         <td id="jsontime"></td>
     </tr>
 </table>
-
 <form action="/asking/ajouter/" method="post">
     <p>
         <label for="newtodo">numero du device</label>

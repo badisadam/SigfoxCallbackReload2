@@ -72,7 +72,8 @@ app.use(session({secret :'badissecret'}))
                 .then( function(response){
 
                     console.log(response.data);
-                    console.log(response.data['data'][0]['time']); //on affiche uniquement le time si nous avons plusieur messages il faudra creer une boucle for et remplacer le "0" par "i"
+                    console.log(response.data['data'][0]['time']); //on affiche uniquement le time si nous avons
+                                                    // plusieur messages il faudra creer une boucle for et remplacer le "0" par "i"
 
 
                     jsontime = response.data['data'][0]['time'];
