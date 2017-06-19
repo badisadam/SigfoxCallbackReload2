@@ -5,6 +5,7 @@ var http = require('http');
 var session = require('cookie-session'); // Charge le middleware de sessions
 var bodyParser = require('body-parser'); // Charge le middleware de gestion des paramètres
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var window = require('window');
 // cfenv provides access to your Cloud Foundry environment
 // for more info, see: https://www.npmjs.com/package/cfenv
 var cfenv = require('cfenv');
@@ -16,7 +17,10 @@ var app = express();
 var appEnv = cfenv.getAppEnv();
 var values = require('object.values');
 var numdevice;
-var reponse_json ;
+var jsontime ="test" ;
+var jsondata;
+var jsondevice;
+
 /*writeHead(200, { 'Content-Type': 'text/html' });
 res.write('test1' + dataresp1);
 utilisé pour afficher de l'html
@@ -32,6 +36,10 @@ app.use(session({secret :'badissecret'}))
     .use(function(req, res, next){
         if (typeof(req.session.tableaucallback) === 'undefined') {
             req.session.tableaucallback = [];
+
+        }
+        if(typeof(req.session.tableaucallback2) === 'undefined') {
+            req.session.tableaucallback2 =[];
         }
         next();
     })
@@ -39,35 +47,46 @@ app.use(session({secret :'badissecret'}))
     /* On affiche la todolist et le formulaire */
     .get('/asking', function(req, res) {
         res.render('asking.ejs', {tableaucallback: req.session.tableaucallback});
+
     })
+
     /* On ajoute un élément à la todolist */
     .post('/asking/ajouter/', urlencodedParser, function(req, res) {
 
-        if (req.body.deviceid !== '') {
+        if(req.body.deviceid !== '') {
 
             numdevice = req.body.deviceid; //recuperation de la valeur du device id
 
-            req.session.tableaucallback.push(numdevice); // push du device id dans le array tableaucallback
+             // push du device id dans le array tableaucallback
             //envoi de la requete GET et récupération dans une variable
-            var jsonobj =
-                axios
-                    .get('https://backend.sigfox.com/api/devices/' + numdevice + '/messages?limit=1', {
-                        auth:{
+
+            axios
+                .get('https://backend.sigfox.com/api/devices/' + numdevice + '/messages?limit=1', {
+                        auth: {
                             username: '5937bc6f9e93a13f76ef0764',
                             password: '49bd406abd0da432b87cc7a9e9efe4df'
-                            },
+                        },
                         responseType: 'json'
                     }
-                        )
-                    .then(function (response) {
-                        console.log(response.data);
+                )
+                .then( function(response){
 
-            }
-        );
- req.session.tableaucallback.push(jsonobj['device']);
+                    console.log(response.data);
+                    console.log(response.data['data'][0]['time']); //on affiche uniquement le time si nous avons plusieur messages il faudra creer une boucle for et remplacer le "0" par "i"
+
+
+                    jsontime = response.data['data'][0]['time'];
+                    jsondata = response.data['data'][0]['data'];
+                    jsondevice = response.data['data'][0]['device'];
+
+                    //parse les datas
+                    //render les parses dans l'html
+                })
         }
             res.redirect('/asking')
-        }     )
+
+    })
+
 
 
     /* Supprime un élément de la todolist */
